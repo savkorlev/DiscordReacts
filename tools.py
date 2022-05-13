@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import random
 
-def place_emojies(action_chain, list_with_emojis, wait):
+def put_emojies(action_chain, list_with_emojis, wait):
     # press and hold the shift button
     action_chain.key_down(Keys.SHIFT)
     action_chain.perform() # note: this line cannot be commented

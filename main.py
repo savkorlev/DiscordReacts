@@ -1,11 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-import time
-import tools
+import messages
+import prereact
 
 # USER INPUT
 email = input("1/7. Enter your account's email:")
@@ -32,52 +31,19 @@ wait = WebDriverWait(driver, 300)
 ac_versatile = ActionChains(driver)
 
 # authorization
-wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.inputWrapper-1YNMmM.inputWrapper-3ESIDR > input"))).send_keys(email)
-wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.block-3uVSn4.marginTop20-2T8ZJx > div:nth-child(2) > div > input"))).send_keys(password)
-wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "button.marginBottom8-emkd0_.button-1cRKG6.button-f2h6uQ.lookFilled-yCfaCM.colorBrand-I6CyqQ.sizeLarge-3mScP9.fullWidth-fJIsjq.grow-2sR_-F"))).click()
-# delete the redundant attributes to save space
-del(email)
-del(password)
+prereact.authorize(wait, email, password)
 
 # turn off motion animations
-wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "button.button-12Fmur:nth-child(3)"))).click()
-wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.item-3XjbnG:nth-child(17)"))).click()
-wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "div.container-2nx-BQ")))[1].click()
-ac_versatile.send_keys(Keys.ESCAPE)
-ac_versatile.perform()
-ac_versatile.reset_actions()
+prereact.turn_off_animations(wait, ac_versatile)
 
-# navigate to the target server
-wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"[aria-label*=\"{target_server}\"]"))).click() 
-
-# get permissions to every visible nsfw channel
-all_server_channels = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.containerDefault-YUSmu3 > div.iconVisibility-vptxma.wrapper-NhbLHG > div.content-1gYQeQ > a"))) # TODO: try to select only those servers that have little sign above the # (pseudo selectors)
-for channel in all_server_channels:
-    channel.click()
-    list_of_red_buttons = driver.find_elements(By.CSS_SELECTOR, "button.action-3eQ5Or.button-f2h6uQ.lookFilled-yCfaCM.colorRed-rQXKgM.sizeLarge-3mScP9.grow-2sR_-F")
-    if len(list_of_red_buttons) != 0:
-        list_of_red_buttons[0].click()
-# saving the first channel in a list of all channels so we can go back to it if needed
-first_channel = all_server_channels[0]
-if len(all_server_channels) == 1:
-    time.sleep(0.5)
-del(channel)
-del(all_server_channels)
-del(list_of_red_buttons)
+# navigate to the target server and get permissions
+first_channel = prereact.navigation_and_permissions(wait, target_server, driver)
 
 # search for the target person
-search_bar = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.search-39IXmY > div > div > div.DraftEditor-root > div.DraftEditor-editorContainer > div > div > div > div")))
-search_bar.click()
-search_bar.send_keys(target_person)
-search_bar.send_keys(Keys.RETURN)
-del(search_bar)
+prereact.search_for_person(wait, target_person)
 
 # get the total number of pages to parse
-if number_of_pages != "max":
-    number_of_pages = int(number_of_pages)
-else:
-    number_of_pages = int(wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.roundButton-2_R5PN.pageButton-1GMGeJ:nth-child(6) > span'))).text)
-# TODO: now the user MUST have more than 5 pages of messages. Fix it
+number_of_pages = prereact.get_number_of_pages(wait, number_of_pages)
 
 for i in range(number_of_pages):
     # get all messages of the target person in the current page
@@ -94,39 +60,9 @@ for i in range(number_of_pages):
         
         # for now dodging the new discord voice channel messages
         if len(driver.find_elements(By.CSS_SELECTOR, "button.joinButton-2KP9ZZ")) != 0:
-            current_message = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"#chat-messages-{message_id}")))
-            ac_versatile.context_click(current_message)
-            ac_versatile.perform()
-            ac_versatile.reset_actions()
-            while len(driver.find_elements(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[0]}\"]")) == 0:
-                while len(driver.find_elements(By.CSS_SELECTOR, "#message-add-reaction")) == 0:
-                    tools.wait_and_right_click(ac_versatile, current_message)
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message-add-reaction"))).click()
-                tools.place_emojies(ac_versatile, emoji_list, wait)
-            first_channel.click()
-
+            messages.process_new_message(driver, message_id, ac_versatile, emoji_list, wait, first_channel)
         else:
-            # select an exact message by its id in the actual chat
-            while len(driver.find_elements(By.CSS_SELECTOR, f"#chat-messages-{message_id}")) == 0:
-                ac_versatile.move_to_element(tray_message)
-                ac_versatile.perform()
-                ac_versatile.reset_actions()
-                jump_button.click()
-            current_message = driver.find_element(By.CSS_SELECTOR, f"#chat-messages-{message_id}")
-    
-            # right click a message. If there was an animation bug - repeat
-            ac_versatile.context_click(current_message)
-            ac_versatile.perform()
-            ac_versatile.reset_actions()
-            while len(driver.find_elements(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[0]}\"]")) == 0:
-                while len(driver.find_elements(By.CSS_SELECTOR, "#message-add-reaction")) == 0:
-                    ac_versatile.move_to_element(tray_message)
-                    ac_versatile.perform()
-                    ac_versatile.reset_actions()
-                    jump_button.click()
-                    tools.wait_and_right_click(ac_versatile, current_message)
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message-add-reaction"))).click()
-                tools.place_emojies(ac_versatile, emoji_list, wait)
+            messages.process_old_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list, wait)
     
     # go to the next page
     driver.find_element(By.CSS_SELECTOR, 'button[rel=\'next\']').click()
