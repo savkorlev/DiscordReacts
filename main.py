@@ -69,8 +69,6 @@ for i in range(number_of_pages):
 
 # driver.quit()
 
-# TODO: new messages
-
 # # ULTRA FAST VERSION___________________________________________________________
 # from selenium import webdriver
 # from selenium.webdriver.common.by import By

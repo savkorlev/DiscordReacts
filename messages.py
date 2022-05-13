@@ -15,14 +15,14 @@ def process_old_message(driver, message_id, action_chain, tray_message, jump_but
     action_chain.perform()
     action_chain.reset_actions()
     while len(driver.find_elements(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[0]}\"]")) == 0:
-        while len(driver.find_elements(By.CSS_SELECTOR, "#message-add-reaction")) == 0:
+        while len(driver.find_elements(By.CSS_SELECTOR, "#message-add-reaction")) == 0: # TODO: put emojies not through the right click but hovering the mouse over the message and clicking the small button
             action_chain.move_to_element(tray_message)
             action_chain.perform()
             action_chain.reset_actions()
             jump_button.click()
             tools.wait_and_right_click(action_chain, current_message)
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message-add-reaction"))).click()
-        tools.put_emojies(action_chain, emoji_list, wait)
+    tools.put_emojies(action_chain, emoji_list, wait) # why there were no errors even while it was tabulated one additional position to the right
 
 def process_new_message(driver, message_id, action_chain, emoji_list, wait, first_channel):
     current_message = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"#chat-messages-{message_id}")))
@@ -30,8 +30,8 @@ def process_new_message(driver, message_id, action_chain, emoji_list, wait, firs
     action_chain.perform()
     action_chain.reset_actions()
     while len(driver.find_elements(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[0]}\"]")) == 0:
-        while len(driver.find_elements(By.CSS_SELECTOR, "#message-add-reaction")) == 0:
+        while len(driver.find_elements(By.CSS_SELECTOR, "#message-add-reaction")) == 0: # TODO: put emojies not through the right click but hovering the mouse over the message and clicking the small button
             tools.wait_and_right_click(action_chain, current_message)
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message-add-reaction"))).click()
-        tools.put_emojies(action_chain, emoji_list, wait)
+    tools.put_emojies(action_chain, emoji_list, wait) # why there were no errors even while it was tabulated one additional position to the right
     first_channel.click()
