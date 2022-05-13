@@ -45,6 +45,14 @@ prereact.search_for_person(wait, target_person)
 # get the total number of pages to parse
 number_of_pages = prereact.get_number_of_pages(wait, number_of_pages)
 
+# delete the redundant variables
+del(chrome_options)
+del(email)
+del(number_of_emojis)
+del(password)
+del(target_person)
+del(target_server)
+
 for i in range(number_of_pages):
     # get all messages of the target person in the current page
     tray_of_messages = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.container-rZM65Y")))
