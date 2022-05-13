@@ -24,7 +24,7 @@ the emoji and click "add to favourites".
 ## Running the software
 After the set up is done, type in:
 ```python
-python discord.py
+python main.py
 ```
 
 ## Remarks and limitations

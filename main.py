@@ -5,7 +5,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import time
-import random
+import tools
 
 # USER INPUT
 email = input("1/7. Enter your account's email:")
@@ -100,22 +100,9 @@ for i in range(number_of_pages):
             ac_versatile.reset_actions()
             while len(driver.find_elements(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[0]}\"]")) == 0:
                 while len(driver.find_elements(By.CSS_SELECTOR, "#message-add-reaction")) == 0:
-                    time.sleep(0.5)
-                    ac_versatile.context_click(current_message)
-                    ac_versatile.perform()
-                    ac_versatile.reset_actions()
+                    tools.wait_and_right_click(ac_versatile, current_message)
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message-add-reaction"))).click()
-            # press and hold the shift button
-            ac_versatile.key_down(Keys.SHIFT)
-            ac_versatile.perform() # note: this line cannot be commented
-            for i in range(len(emoji_list)):
-                time.sleep(random.uniform(0.5, 1.0)) # !!! 0.5 is the slowest time so the emojis register in the correct order
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"[data-name=\"{emoji_list[i]}\"]"))).click()
-            # release the shift button
-            ac_versatile.reset_actions()
-            ac_versatile.key_up(Keys.SHIFT)
-            ac_versatile.perform()
-            ac_versatile.reset_actions()
+                tools.place_emojies(ac_versatile, emoji_list, wait)
             first_channel.click()
 
         else:
@@ -137,24 +124,10 @@ for i in range(number_of_pages):
                     ac_versatile.perform()
                     ac_versatile.reset_actions()
                     jump_button.click()
-                    time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out
-                    ac_versatile.context_click(current_message)
-                    ac_versatile.perform()
-                    ac_versatile.reset_actions()
+                    tools.wait_and_right_click(ac_versatile, current_message)
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#message-add-reaction"))).click()
-            
-            # press and hold the shift button
-            ac_versatile.key_down(Keys.SHIFT)
-            ac_versatile.perform() # note: this line cannot be commented
-            for i in range(len(emoji_list)):
-                time.sleep(random.uniform(0.5, 1.0)) # !!! 0.5 is the slowest time so the emojis register in the correct order
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"[data-name=\"{emoji_list[i]}\"]"))).click()
-            # release the shift button
-            ac_versatile.reset_actions()
-            ac_versatile.key_up(Keys.SHIFT)
-            ac_versatile.perform()
-            ac_versatile.reset_actions()
-
+                tools.place_emojies(ac_versatile, emoji_list, wait)
+    
     # go to the next page
     driver.find_element(By.CSS_SELECTOR, 'button[rel=\'next\']').click()
 
