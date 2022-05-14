@@ -17,8 +17,7 @@ def put_emojies(action_chain, list_with_emojis, wait):
     action_chain.perform()
     action_chain.reset_actions()
 
-def wait_and_click(action_chain, current_message, message_id, wait):
-    time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out 
+def open_emoji_panel(action_chain, current_message, message_id, wait):
     action_chain.move_to_element(current_message)
     action_chain.perform()
     action_chain.reset_actions()
