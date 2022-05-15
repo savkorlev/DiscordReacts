@@ -11,9 +11,9 @@ def authorize(wait, email, password):
 
 def turn_off_animations(wait, action_chain):
     # turn off motion animations
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "button.button-12Fmur:nth-child(3)"))).click()
-    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.item-3XjbnG:nth-child(17)"))).click()
-    wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "div.container-2nx-BQ")))[2].click() # TODO: click not on the specific position but on the name > div > div
+    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.flex-2S1XBF > [aria-label=\"User Settings\"]"))).click()
+    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "[aria-controls=\"accessibility-tab\"]"))).click()
+    wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "div.container-2nx-BQ")))[2].click()
     action_chain.send_keys(Keys.ESCAPE)
     action_chain.perform()
     action_chain.reset_actions()
