@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import messages
 import prereact
 
+
 # USER INPUT
 email = input("1/7. Enter your account's email:")
 password = input("2/7. Enter your account's password:")
