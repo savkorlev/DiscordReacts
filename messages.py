@@ -20,12 +20,12 @@ def process_old_message(driver, message_id, action_chain, tray_message, jump_but
     is_emoji_panel_opened = False
     while not is_emoji_panel_opened: 
         try:
+            time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out
+            tools.open_emoji_panel(action_chain, current_message, message_id, driver)
             driver.find_element(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[0]}\"]")
             is_emoji_panel_opened = True
         except NoSuchElementException:
             tools.click_jump_button(action_chain, tray_message, jump_button)
-            time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out 
-            tools.open_emoji_panel(action_chain, current_message, message_id, driver)
 
     # put emojies
     tools.put_emojies(action_chain, emoji_list, wait) # why there were no errors even while it was tabulated one additional position to the right
@@ -37,11 +37,11 @@ def process_new_message(driver, message_id, action_chain, emoji_list, wait, firs
     is_emoji_panel_opened = False
     while not is_emoji_panel_opened:
         try:
+            tools.open_emoji_panel(action_chain, current_message, message_id, driver)
             driver.find_element(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[0]}\"]")
             is_emoji_panel_opened = True
         except NoSuchElementException:
             time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out 
-            tools.open_emoji_panel(action_chain, current_message, message_id, driver)
 
     # put emojies
     tools.put_emojies(action_chain, emoji_list, wait) # why there were no errors even while it was tabulated one additional position to the right

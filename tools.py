@@ -33,7 +33,7 @@ def open_emoji_panel(action_chain, current_message, message_id, driver):
         driver.find_element(By.CSS_SELECTOR, f"#chat-messages-{message_id} > div > div.buttonContainer-1502pf > div.buttons-3dF5Kd > div > [aria-label=\"Add Reaction\"]").click()
     except (NoSuchElementException, ElementClickInterceptedException):
         pass
-    # TODO: try not to pass message_id here and get it from current_message object instead
+    # TODO: maybe try not to pass message_id here and get it from current_message object instead
 
 
 def click_jump_button(action_chain, tray_message, jump_button):
