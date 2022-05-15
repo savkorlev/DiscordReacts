@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-import time
 
 
 def authorize(wait, email, password):
@@ -40,19 +39,22 @@ def navigation_and_permissions(wait, target_server, driver):
     
     # saving the first channel in a list of all channels so we can go back to it if needed
     first_channel = all_server_channels[0]
-    if len(all_server_channels) == 1:
-        time.sleep(1.0)
     return first_channel
 
 
 def search_for_person(wait, target_person):
     
     # search for the target person
+    # is_search_bar_interactble = False
+    # while not is_search_bar_interactble:
+    # try:
     search_bar = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.search-39IXmY > div > div > div.DraftEditor-root > div.DraftEditor-editorContainer > div > div > div > div")))
     search_bar.click()
     search_bar.send_keys(target_person)
     search_bar.send_keys(Keys.RETURN)
-
+    # except:
+    # time.sleep(1.0)
+    # continue
 
 def get_number_of_pages(wait, number_of_pages):
     

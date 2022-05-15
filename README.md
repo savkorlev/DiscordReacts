@@ -31,18 +31,13 @@ python main.py
 
 ### First
 While the script is running do not interact with the opened browser window 
-in any way. Interacting may cause errors.
+in any way. The only exception is that you can minimize the browser window.
+Any other interaction (including mouse movements) may cause errors.
 
 ### Second
-Check the TODOs.
+Extensions and improvements: Check the TODOs.
 
 ### Third
-To bypass discord antispam systems the script uses time.sleep() together with 
-randomly selected times to wait. Current precision level for time is 
-0.5 seconds.
-
-### Fourth
-There is a version without any limitations under the "# ULTRA FAST VERSION" 
-comment. You can comment the main body of the script and uncomment this one to 
-see how fast the maximum speed of the script. Beware, however of the incorrect 
-emoji order and the consequient IP ban.
+To somehow bypass discord antispam systems the script uses time.sleep() 
+together with randomly selected times to wait. Current precision level for 
+time is 0.5 seconds.

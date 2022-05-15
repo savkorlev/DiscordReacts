@@ -14,7 +14,7 @@ def put_emojies(action_chain, list_with_emojis, wait):
     
     # put emojies in order
     for i in range(len(list_with_emojis)):
-        time.sleep(random.uniform(0.5, 1.5)) # !!! 0.5 is the slowest time so the emojis register in the correct order
+        time.sleep(random.uniform(0.5, 1.0)) # !!! 0.5 is the slowest time so the emojis register in the correct order
         wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"[data-name=\"{list_with_emojis[i]}\"]"))).click()
     
     # release the shift button
