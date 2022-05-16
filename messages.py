@@ -18,7 +18,10 @@ def process_old_message(driver, message_id, action_chain, tray_message, jump_but
     
     # open the reaction panel. If there was an animation bug - repeat
     is_emoji_panel_opened = False
-    while not is_emoji_panel_opened: 
+    # avoid locked messages - no more than 5 attempts
+    number_of_attempts = 0
+    while not is_emoji_panel_opened and number_of_attempts < 5: 
+        number_of_attempts += 1
         try:
             time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out
             tools.open_emoji_panel(action_chain, current_message, message_id, driver)
@@ -28,7 +31,8 @@ def process_old_message(driver, message_id, action_chain, tray_message, jump_but
             tools.click_jump_button(action_chain, tray_message, jump_button)
 
     # put emojies
-    tools.put_emojies(action_chain, emoji_list, wait) # why there were no errors even while it was tabulated one additional position to the right
+    if number_of_attempts < 5:
+        tools.put_emojies(action_chain, emoji_list, wait) # why there were no errors even while it was tabulated one additional position to the right
 
 
 def process_new_message(driver, message_id, action_chain, emoji_list, wait, first_channel):
