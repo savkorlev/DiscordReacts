@@ -25,6 +25,8 @@ number_of_pages = input("7/7. Enter the number of pages to parse (example: 4. To
 chrome_options = webdriver.ChromeOptions()
 # hide the automated browser notification
 chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')  # last I checked this was necessary.
 driver = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
 driver.maximize_window() # TODO: minimize window
 driver.get("https://discord.com/channels/@me")
