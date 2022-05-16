@@ -27,7 +27,8 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
 # activating headless mode
 chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')  # last I checked this was necessary
+chrome_options.add_argument('--disable-gpu')  
+# TODO: hide headless
 driver = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
 driver.maximize_window() # TODO: minimize window
 driver.get("https://discord.com/channels/@me")
