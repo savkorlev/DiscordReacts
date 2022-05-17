@@ -63,18 +63,14 @@ del(target_server)
 for i in range(number_of_pages):
     # get all messages of the target person in the current page
     tray_of_messages = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.container-rZM65Y")))
-    print("____________________________________________")
-    print(tray_of_messages)
 
     # find a message from the tray of messages in the actual chat by its id
     for tray_message in tray_of_messages:
         message_id = tray_message.find_element(By.CSS_SELECTOR, "div > div > div").get_attribute("id")[14:]
-        print("____________________________________________")
-        print(message_id)
         
         is_jump_button_clicked = False
         while not is_jump_button_clicked:
-            try:
+            try: # sometimes endless loop
                 jump_button = tools.find_jump_button(ac_versatile, tray_message)
                 jump_button.click()
                 is_jump_button_clicked = True
@@ -85,7 +81,7 @@ for i in range(number_of_pages):
         if len(driver.find_elements(By.CSS_SELECTOR, "button.joinButton-2KP9ZZ")) != 0:
             messages.process_new_message(driver, message_id, ac_versatile, emoji_list, wait, first_channel)
         else:
-            messages.process_old_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list, wait)
+            messages.process_old_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list, wait) # sometimes endless loop
     
     # go to the next page
     driver.find_element(By.CSS_SELECTOR, 'button[rel=\'next\']').click()
