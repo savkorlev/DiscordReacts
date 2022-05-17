@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import ElementNotInteractableException
+import tools
 import messages
 import prereact
 
@@ -61,15 +63,23 @@ del(target_server)
 for i in range(number_of_pages):
     # get all messages of the target person in the current page
     tray_of_messages = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.container-rZM65Y")))
-    
+    print("____________________________________________")
+    print(tray_of_messages)
+
     # find a message from the tray of messages in the actual chat by its id
     for tray_message in tray_of_messages:
         message_id = tray_message.find_element(By.CSS_SELECTOR, "div > div > div").get_attribute("id")[14:]
-        ac_versatile.move_to_element(tray_message) # TODO: move_to_element_with_offset didn't work out, is there any other way to skip the jump button?
-        ac_versatile.perform()
-        ac_versatile.reset_actions()
-        jump_button = tray_message.find_element(By.CSS_SELECTOR, "div.buttonsContainer-Nmgy7x")
-        jump_button.click()
+        print("____________________________________________")
+        print(message_id)
+        
+        is_jump_button_clicked = False
+        while not is_jump_button_clicked:
+            try:
+                jump_button = tools.find_jump_button(ac_versatile, tray_message)
+                jump_button.click()
+                is_jump_button_clicked = True
+            except ElementNotInteractableException:
+                continue
         
         # for now dodging the new discord voice channel messages
         if len(driver.find_elements(By.CSS_SELECTOR, "button.joinButton-2KP9ZZ")) != 0:

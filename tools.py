@@ -42,3 +42,10 @@ def click_jump_button(action_chain, tray_message, jump_button):
     action_chain.perform()
     action_chain.reset_actions()
     jump_button.click()
+
+def find_jump_button(action_chain, tray_message):
+    action_chain.move_to_element(tray_message) # TODO: move_to_element_with_offset didn't work out, is there any other way to skip the jump button?
+    action_chain.perform()
+    action_chain.reset_actions()
+    jump_button = tray_message.find_element(By.CSS_SELECTOR, "div.buttonsContainer-Nmgy7x")
+    return jump_button
