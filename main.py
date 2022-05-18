@@ -30,7 +30,8 @@ chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
 # activating headless mode
 chrome_options.add_argument('--window-size=1920,1080')
 chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')  
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('user-agent=\'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36\'')
 # TODO: hide headless
 driver = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
 driver.maximize_window()
