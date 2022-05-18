@@ -33,7 +33,7 @@ chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')  
 # TODO: hide headless
 driver = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
-driver.maximize_window() # TODO: minimize window
+driver.maximize_window()
 driver.get("https://discord.com/channels/@me")
 wait = WebDriverWait(driver, 300)
 ac_versatile = ActionChains(driver)
@@ -64,27 +64,30 @@ del(target_server)
 for i in range(number_of_pages):
     # get all messages of the target person in the current page
     tray_of_messages = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.container-rZM65Y")))
-
+    
     # find a message from the tray of messages in the actual chat by its id
     for tray_message in tray_of_messages:
         message_id = tray_message.find_element(By.CSS_SELECTOR, "div > div > div").get_attribute("id")[14:]
         
         is_jump_button_clicked = False
         while not is_jump_button_clicked:
-            try: # sometimes endless loop
+            try:
                 jump_button = tools.find_jump_button(ac_versatile, tray_message)
                 jump_button.click()
                 is_jump_button_clicked = True
             except ElementNotInteractableException:
                 continue
         
-        # for now dodging the new discord voice channel messages
+        # voice chat message
         if len(driver.find_elements(By.CSS_SELECTOR, "button.joinButton-2KP9ZZ")) != 0:
             messages.process_new_message(driver, message_id, ac_versatile, emoji_list, wait, first_channel)
+        # any other message
         else:
-            messages.process_old_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list, wait) # sometimes endless loop
+            messages.process_old_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list)
     
     # go to the next page
     driver.find_element(By.CSS_SELECTOR, 'button[rel=\'next\']').click()
 
 # driver.quit()
+
+# TODO: since jump is a getter the frequency of clicking it can also be detectable by discord. Set random waiting times before clicking
