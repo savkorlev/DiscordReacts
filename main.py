@@ -7,34 +7,37 @@ from selenium.common.exceptions import ElementNotInteractableException
 import tools
 import messages
 import prereact
+import time
+import random
 
 
 # USER INPUT
-email = input("1/7. Enter your account's email:")
-password = input("2/7. Enter your account's password:")
-target_person = "from: " + input("3/7. Enter the target person's identifier (example: SampleUser#1234):") + " "
-target_server = input("4/7. Enter the target server (example: Sample Server):")
-number_of_emojis = input("5/7. Enter the number of emojis to put (example: 4):")
+email = input("1/8. Enter your account's email:")
+password = input("2/8. Enter your account's password:")
+target_person = "from: " + input("3/8. Enter the target person's identifier (example: SampleUser#1234):") + " "
+target_server = input("4/8. Enter the target server (example: Sample Server):")
+number_of_emojis = input("5/8. Enter the number of emojis to put (example: 4):")
 emoji_list = []
 for i in range(int(number_of_emojis)):
     if i == 0:
-        emoji_list.append(input(f"6/7. Enter the name of the {i + 1} emoji (example: regional_indicator_s. WARNING: order does matter):"))
+        emoji_list.append(input(f"6/8. Enter the name of the {i + 1} emoji (example: regional_indicator_s. WARNING: order does matter):"))
     else:
         emoji_list.append(input(f"Enter the name of the {i + 1} emoji:"))
-number_of_pages = input("7/7. Enter the number of pages to parse (example: 4. To enter all messages type: max. Each page contains 25 messages):")
+number_of_pages = input("7/8. Enter the number of pages to parse (example: 4. To enter all messages type: max. Each page contains 25 messages):")
+screen_resolution = input("8/8. Enter your screen resolution (example: 1920x1080):").split("x")
 
 # set up
 chrome_options = webdriver.ChromeOptions()
 # hide the automated browser notification
 chrome_options.add_experimental_option("excludeSwitches", ['enable-automation'])
 # activating headless mode
-chrome_options.add_argument('--window-size=1920,1080')
+chrome_options.add_argument(f'--window-size={screen_resolution[0]},{screen_resolution[1]}')
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('user-agent=\'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36\'')
 # TODO: hide headless
 driver = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
-driver.maximize_window()
+driver.maximize_window() # driver.set_window_size(1920, 1080)
 driver.get("https://discord.com/channels/@me")
 wait = WebDriverWait(driver, 300)
 ac_versatile = ActionChains(driver)
@@ -61,6 +64,7 @@ del(number_of_emojis)
 del(password)
 del(target_person)
 del(target_server)
+del(screen_resolution)
 
 for i in range(number_of_pages):
     # get all messages of the target person in the current page
@@ -73,6 +77,7 @@ for i in range(number_of_pages):
         is_jump_button_clicked = False
         while not is_jump_button_clicked:
             try:
+                time.sleep(random.uniform(0.0, 0.5))
                 jump_button = tools.find_jump_button(ac_versatile, tray_message)
                 jump_button.click()
                 is_jump_button_clicked = True
@@ -91,4 +96,5 @@ for i in range(number_of_pages):
 
 # driver.quit()
 
-# TODO: since jump is a getter the frequency of clicking it can also be detectable by discord. Set random waiting times before clicking
+# TODO: increase the precision level to 0.25 seconds and test
+# TODO: extention: run js using requests-html

@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import tools
 import time
+import random
 
 
 def process_new_message(driver, message_id, action_chain, emoji_list, wait, first_channel):
@@ -39,6 +40,7 @@ def process_old_message(driver, message_id, action_chain, tray_message, jump_but
             tools.put_emojies(action_chain, emoji_list, driver)
             are_emojies_placed = True
         except NoSuchElementException:
+            time.sleep(random.uniform(0.0, 0.5))
             tools.click_jump_button(action_chain, tray_message, jump_button)
             time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out
 
