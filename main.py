@@ -35,7 +35,6 @@ chrome_options.add_argument(f'--window-size={screen_resolution[0]},{screen_resol
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('user-agent=\'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36\'')
-# TODO: hide headless
 driver = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
 driver.maximize_window() # driver.set_window_size(1920, 1080)
 driver.get("https://discord.com/channels/@me")
@@ -92,9 +91,11 @@ for i in range(number_of_pages):
             except ElementNotInteractableException:
                 pass
         
+        time.sleep(0.5) # !!! because of discord weird animation bugs this line makes script to work even faster by omitting double jump clicks
+        
         # voice chat message
         if len(driver.find_elements(By.CSS_SELECTOR, "button.joinButton-2KP9ZZ")) != 0:
-            messages.process_new_message(driver, message_id, ac_versatile, emoji_list, wait, first_channel)
+            messages.process_new_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list, first_channel)
             
         # any other message
         else:
@@ -103,7 +104,4 @@ for i in range(number_of_pages):
     # go to the next page
     driver.find_element(By.CSS_SELECTOR, 'button[rel=\'next\']').click()
 
-# driver.quit()
-
-# TODO: increase the precision level to 0.25 seconds and test
-# TODO: extention: run js using requests-html
+driver.quit()
