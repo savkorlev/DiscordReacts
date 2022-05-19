@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
 import tools
 import messages
 import prereact
@@ -72,21 +72,30 @@ for i in range(number_of_pages):
     
     # find a message from the tray of messages in the actual chat by its id
     for tray_message in tray_of_messages:
+        
         message_id = tray_message.find_element(By.CSS_SELECTOR, "div > div > div").get_attribute("id")[14:]
         
         is_jump_button_clicked = False
+        
         while not is_jump_button_clicked:
+            
+            time.sleep(random.uniform(0.0, 0.5))
+            
             try:
-                time.sleep(random.uniform(0.0, 0.5))
                 jump_button = tools.find_jump_button(ac_versatile, tray_message)
+            except NoSuchElementException:
+                continue
+            
+            try:
                 jump_button.click()
                 is_jump_button_clicked = True
             except ElementNotInteractableException:
-                continue
+                pass
         
         # voice chat message
         if len(driver.find_elements(By.CSS_SELECTOR, "button.joinButton-2KP9ZZ")) != 0:
             messages.process_new_message(driver, message_id, ac_versatile, emoji_list, wait, first_channel)
+            
         # any other message
         else:
             messages.process_old_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list)

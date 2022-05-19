@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 import time
 import random
 
@@ -10,10 +9,7 @@ def open_emoji_panel(action_chain, current_message, message_id, driver): # headl
     action_chain.move_to_element(current_message)
     action_chain.perform()
     action_chain.reset_actions()
-    try:
-        driver.find_element(By.CSS_SELECTOR, f"#chat-messages-{message_id} > div > div.buttonContainer-1502pf > div.buttons-3dF5Kd > div > [aria-label=\"Add Reaction\"]").click()
-    except (NoSuchElementException, ElementClickInterceptedException):
-        pass
+    driver.find_element(By.CSS_SELECTOR, f"#chat-messages-{message_id} > div > div.buttonContainer-1502pf > div.buttons-3dF5Kd > div > [aria-label=\"Add Reaction\"]").click()
     # TODO: maybe try not to pass message_id here and get it from current_message object instead
 
 
