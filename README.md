@@ -40,4 +40,4 @@ Extensions and improvements: Check the TODOs.
 ### Third
 To somehow bypass discord antispam systems the script uses time.sleep() 
 together with randomly selected times to wait. Current precision level for 
-time is 0.5 seconds.
+time is 0.5 seconds. Current step is 1.0 seconds.
