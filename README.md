@@ -30,14 +30,8 @@ python main.py
 ## Remarks and limitations
 
 ### First
-While the script is running do not interact with the opened browser window 
-in any way. The only exception is that you can minimize the browser window.
-Any other interaction (including mouse movements) may cause errors.
+Limitations, extensions and improvements potential: Check the TODOs.
 
 ### Second
-Extensions and improvements: Check the TODOs.
-
-### Third
-To somehow bypass discord antispam systems the script uses time.sleep() 
-together with randomly selected times to wait. Current precision level for 
-time is 0.5 seconds. Current step is 1.0 seconds.
+Current precision level for sleeping time is 0.5 seconds. 
+Current step is 1.0 seconds.
