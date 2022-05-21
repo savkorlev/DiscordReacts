@@ -78,7 +78,7 @@ for i in range(number_of_pages):
         
         while not is_jump_button_clicked:
             
-            time.sleep(random.uniform(0.0, 0.5))
+            time.sleep(random.uniform(0.0, 1.0))
             
             try:
                 jump_button = tools.find_jump_button(ac_versatile, tray_message)

@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 import tools
 
 
@@ -22,7 +22,7 @@ def process_new_message(driver, message_id, action_chain, tray_message, jump_but
         
         try:
             tools.open_emoji_panel(action_chain, current_message, message_id, driver)
-        except NoSuchElementException:
+        except (NoSuchElementException, ElementClickInterceptedException):
             tools.handle_new_message_exceptions(first_channel, action_chain, tray_message, jump_button)
             continue
         
@@ -56,7 +56,7 @@ def process_old_message(driver, message_id, action_chain, tray_message, jump_but
         
         try:
             tools.open_emoji_panel(action_chain, current_message, message_id, driver)
-        except NoSuchElementException:
+        except (NoSuchElementException, ElementClickInterceptedException):
             tools.handle_old_message_exceptions(action_chain, tray_message, jump_button)
             continue
         
