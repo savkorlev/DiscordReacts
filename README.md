@@ -4,7 +4,7 @@ This tool helps you to do it in the original way!
 Imagine your friend waking up and seeing all of their messages 
 covered with the selected emojis, just like this:
 
-![alt text](https://github.com/savkorlev/discord_reactbot/blob/main/Cutie.png?raw=true)
+![alt text](https://github.com/savkorlev/discord_reactbot/blob/main/cutie.png?raw=true)
 
 How cute! :3
 
