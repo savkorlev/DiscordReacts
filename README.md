@@ -9,12 +9,12 @@ covered with the selected emojis, just like this:
 How cute! :3
 
 ## Prerequisites
-This script uses the Chrome browser together with its driver to run.
+This script uses the Chrome browser together with its driver.
 The archive includes the driver but Chrome itself must be installed separately.
 Moreover, the newest driver can be downloaded separately as well from the 
 official website: [ChromeDriver](https://chromedriver.chromium.org/).
 
-[Python 3](https://www.python.org/) is needed to run the script.
+[Python 3](https://www.python.org/) is required to run the script.
 
 [Selenium](https://www.selenium.dev/) is the only additional module that is 
 used in the script. If you have Selenium installed you can skip the setting 
