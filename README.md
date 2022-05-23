@@ -1,7 +1,8 @@
 # Discord React Bot
-Have you ever wanted to express how deeply you like your friends? With 
-this tool you can totally do it! Imagine your friend waking up and seeing 
-that all his messages are covered with the chosen emotes, just like that:
+Have you ever wanted to express how deeply you appreciate your friends? 
+With this tool you can totally do it! Imagine your friend waking up and 
+seeing that all his messages are covered with the chosen emotes, just 
+like that:
 
 ![alt text](https://github.com/savkorlev/discord_reactbot/blob/main/Cutie.png?raw=true)
 
