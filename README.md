@@ -34,4 +34,4 @@ Limitations, extensions and improvements potential: Check the TODOs.
 
 ### Second
 Current precision level for sleeping time is 0.5 seconds. 
-Current step is 1.0 seconds.
+Current step is 1.5 seconds.

@@ -21,7 +21,7 @@ def put_emojies(action_chain, emoji_list, driver):
     
     # put emojies in order
     for i in range(len(emoji_list)):
-        time.sleep(random.uniform(0.5, 1.5)) # !!! 0.5 is the slowest time so the emojis register in the correct order
+        time.sleep(random.uniform(0.5, 2.0)) # !!! 0.5 is the slowest time so the emojis register in the correct order
         driver.find_element(By.CSS_SELECTOR, f"[data-name=\"{emoji_list[i]}\"]").click()
     
     # release the shift button
@@ -50,6 +50,6 @@ def handle_new_message_exceptions(first_channel, action_chain, tray_message, jum
     handle_old_message_exceptions(action_chain, tray_message, jump_button)
 
 def handle_old_message_exceptions(action_chain, tray_message, jump_button):
-    time.sleep(random.uniform(0.0, 1.0))
+    time.sleep(random.uniform(0.0, 1.5))
     click_jump_button(action_chain, tray_message, jump_button)
     time.sleep(0.5) # !!! 0.3 is the slowest time so the animation doesn't bug out
