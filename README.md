@@ -1,15 +1,19 @@
 # Discord React Bot
 Have you ever wanted to express how deeply you appreciate your friends? 
-With this tool you can totally do it! Imagine your friend waking up and 
-seeing that all his messages are covered with the chosen emotes, just 
-like that:
+This tool helps you to do it in the original way! 
+Imagine your friend waking up and seeing all of their messages 
+covered with the selected emojis, just like this:
 
 ![alt text](https://github.com/savkorlev/discord_reactbot/blob/main/Cutie.png?raw=true)
 
 How cute! :3
 
-
 ## Prerequisites
+This script uses Chrome browser together with its driver to run.
+The archive includes the driver but Chrome itself must be installed separately.
+Moreover, the newest driver can be downloaded separately as well from the 
+official website: [ChromeDriver](https://chromedriver.chromium.org/).
+
 [Python 3](https://www.python.org/) is needed to run the script.
 
 [Selenium](https://www.selenium.dev/) is the only additional module that is 
