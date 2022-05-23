@@ -37,7 +37,7 @@ chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('user-agent=\'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36\'')
 driver = webdriver.Chrome(executable_path="chromedriver.exe", options=chrome_options)
-driver.maximize_window() # driver.set_window_size(1920, 1080)
+driver.maximize_window()  # driver.set_window_size(1920, 1080)
 driver.get("https://discord.com/channels/@me")
 wait = WebDriverWait(driver, 300)
 ac_versatile = ActionChains(driver)
@@ -58,13 +58,7 @@ prereact.search_for_person(wait, target_person)
 number_of_pages = prereact.get_number_of_pages(wait, number_of_pages)
 
 # delete the redundant variables
-del(chrome_options)
-del(email)
-del(number_of_emojis)
-del(password)
-del(target_person)
-del(target_server)
-del(screen_resolution)
+del(chrome_options, email, number_of_emojis, password, target_person, target_server, screen_resolution)
 
 for i in range(number_of_pages):
     # get all messages of the target person in the current page
@@ -92,7 +86,7 @@ for i in range(number_of_pages):
             except ElementNotInteractableException:
                 pass
         
-        time.sleep(0.5) # !!! because of discord weird animation bugs this line makes script to work even faster by omitting double jump clicks
+        time.sleep(0.5)  # !!! because of discord weird animation bugs this line makes script to work even faster by omitting double jump clicks
         
         # voice chat message
         if len(driver.find_elements(By.CSS_SELECTOR, "button.joinButton-2KP9ZZ")) != 0:

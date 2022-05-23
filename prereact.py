@@ -29,7 +29,7 @@ def navigation_and_permissions(wait, target_server, driver):
     wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"[aria-label*=\"{target_server}\"]"))).click() 
     
     # get permissions to every visible nsfw channel
-    all_server_channels = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.containerDefault-YUSmu3 > div.iconVisibility-vptxma.wrapper-NhbLHG > div.content-1gYQeQ > a"))) # TODO: try to select only those servers that have little sign above the # (pseudo selectors)
+    all_server_channels = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.containerDefault-YUSmu3 > div.iconVisibility-vptxma.wrapper-NhbLHG > div.content-1gYQeQ > a")))  # TODO: try to select only those servers that have little sign above the # (pseudo selectors)
     for channel in all_server_channels:
         channel.click()
         try:
@@ -48,6 +48,7 @@ def search_for_person(wait, target_person):
     search_bar.click()
     search_bar.send_keys(target_person)
     search_bar.send_keys(Keys.RETURN)
+
 
 def get_number_of_pages(wait, number_of_pages):
     
