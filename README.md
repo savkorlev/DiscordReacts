@@ -9,7 +9,7 @@ covered with the selected emojis, just like this:
 How cute! :3
 
 ## Prerequisites
-This script uses Chrome browser together with its driver to run.
+This script uses the Chrome browser together with its driver to run.
 The archive includes the driver but Chrome itself must be installed separately.
 Moreover, the newest driver can be downloaded separately as well from the 
 official website: [ChromeDriver](https://chromedriver.chromium.org/).
