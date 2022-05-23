@@ -1,4 +1,10 @@
 # Discord React Bot
+Have you ever wanted to express how deeply you like your friends? With 
+this tool you can totally do it! Imagine your friend waking up and seeing 
+that all his messages are covered with the chosen emotes, just like that:
+![alt text](https://github.com/savkorlev/discord_reactbot/blob/main/Cutie.png?raw=true)
+How cute! :3
+
 
 ## Prerequisites
 [Python 3](https://www.python.org/) is needed to run the script.
