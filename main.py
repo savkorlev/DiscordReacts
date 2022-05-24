@@ -23,7 +23,7 @@ for i in range(int(number_of_emojis)):
         emoji_list.append(input(f"6/8. Enter the name of the {i + 1} emoji (example: regional_indicator_s. WARNING: order does matter):"))
     else:
         emoji_list.append(input(f"Enter the name of the {i + 1} emoji:"))
-number_of_pages = input("7/8. Enter the number of pages to parse (example: 4. To enter all messages type: max. Each page contains 25 messages):")
+str_number_of_pages = input("7/8. Enter the number of pages to parse (example: 4. To enter all messages type: max. Each page contains 25 messages):")
 screen_resolution = input("8/8. Enter your screen resolution (example: 1920x1080):").split("x")
 
 # set up
@@ -55,7 +55,10 @@ first_channel = prereact.navigation_and_permissions(wait, target_server, driver)
 prereact.search_for_person(wait, target_person)
 
 # get the total number of pages to parse
-number_of_pages = prereact.get_number_of_pages(wait, number_of_pages)
+number_of_pages = prereact.get_number_of_pages(wait, str_number_of_pages)
+
+# go to the last page
+prereact.go_to_last_page(wait, number_of_pages)
 
 # delete the redundant variables
 del(chrome_options, email, number_of_emojis, password, target_person, target_server, screen_resolution)
@@ -65,7 +68,7 @@ for i in range(number_of_pages):
     tray_of_messages = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li.container-rZM65Y")))
     
     # find a message from the tray of messages in the actual chat by its id
-    for tray_message in tray_of_messages:
+    for tray_message in reversed(tray_of_messages):
         
         message_id = tray_message.find_element(By.CSS_SELECTOR, "div > div > div").get_attribute("id")[14:]
         
@@ -97,6 +100,6 @@ for i in range(number_of_pages):
             messages.process_old_message(driver, message_id, ac_versatile, tray_message, jump_button, emoji_list)
     
     # go to the next page
-    driver.find_element(By.CSS_SELECTOR, 'button[rel=\'next\']').click()
+    driver.find_element(By.CSS_SELECTOR, 'button[rel=\'prev\']').click()
 
 driver.quit()

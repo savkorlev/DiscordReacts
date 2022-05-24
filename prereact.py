@@ -59,3 +59,6 @@ def get_number_of_pages(wait, number_of_pages):
         number_of_pages = int(wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.roundButton-2_R5PN.pageButton-1GMGeJ:nth-child(6) > span'))).text)
     return number_of_pages
     # TODO: now the user MUST have more than 5 pages of messages. Fix it
+
+def go_to_last_page(wait, number_of_pages):
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, f'[aria-label = "Page {number_of_pages}"]'))).click()
