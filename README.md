@@ -10,9 +10,11 @@ How cute! :3
 
 ## Prerequisites
 This script uses the Chrome browser together with its driver.
-The archive includes the driver but Chrome itself must be installed separately.
-Moreover, the newest driver can be downloaded separately as well from the 
-official website: [ChromeDriver](https://chromedriver.chromium.org/).
+The archive includes the driver but Chrome itself must be installed separately. 
+The driver and Chrome versions must match in order for the script to run.
+The script was tested on the attached driver version 100.0.4896.60.
+The newest driver can also be downloaded separately from the 
+official website: [ChromeDriver](https://chromedriver.storage.googleapis.com/index.html).
 
 [Python 3](https://www.python.org/) is required to run the script.
 
